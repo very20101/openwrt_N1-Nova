@@ -93,11 +93,11 @@ jobs:
         make -j$(nproc) || make -j1 || make -j1 V=s
         echo "compile_status=success" >> $GITHUB_ENV
 
-    - name: Upload OpenWrt to Release
+    - name: Upload OpenWrt to Artifacts
       uses: ncipollo/release-action@main
       if: ${{ steps.clean.outputs.status }} == 'success' && !cancelled()
       with:
-          tag: ${{ steps.codes.outputs.build_tag }}
+          tag: ROOTFS-N1-Nova
           artifacts: openwrt/output/*
           allowUpdates: true
           removeArtifacts: false
@@ -118,14 +118,14 @@ jobs:
       uses: ncipollo/release-action@main
       if: ${{ env.PACKAGED_STATUS }} == 'success' && !cancelled()
       with:
-          tag: ${{ steps.codes.outputs.build_tag }}
+          tag: Opwrt-N1-Nova
           artifacts: ${{ env.PACKAGED_OUTPUTPATH }}/*
           allowUpdates: true
           removeArtifacts: false
           replacesArtifacts: true
           token: ${{ secrets.GITHUB_TOKEN }}
           body: |
-            建议刷写U盘使用，待使用后认为版本稳定可靠，可以刷入EMMC
+            建议刷写U盘使用
             * 基本信息
             IP: 192.168.1.200
             账户: root
