@@ -11,11 +11,11 @@ git clone -b main https://github.com/very20101/openwrt_N1-Nova packages/opwrt_N1
 
 # Update packages
 rm -rf feeds/luci/applications/luci-app-passwall
-cp -fr clone/amlogic/luci-app-amlogic clone/passwall/luci-app-passwall feeds/luci/applications/
+cp -rf clone/amlogic/luci-app-amlogic clone/passwall/luci-app-passwall feeds/luci/applications/
 
 ## add extra-package
-mv cp -rf packages/opwrt_N1/extra-package/luci-app-ssr-plus feeds/luci/applications/luci-app-ssr-plus
-mv cp -rf packages/opwrt_N1/extra-package/luci-app-passwall2 feeds/luci/applications/luci-app-passwall2
+cp -rf packages/opwrt_N1/extra-package/luci-app-ssr-plus feeds/luci/applications/
+cp -rf packages/opwrt_N1/extra-package/luci-app-passwall2 feeds/luci/applications/
 
 # Clean packages
 rm -rf clone
