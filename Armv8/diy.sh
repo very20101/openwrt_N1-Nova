@@ -7,9 +7,21 @@ sed -i 's/192.168.1.1/192.168.1.200/g' package/base-files/files/bin/config_gener
 git clone https://github.com/ophub/luci-app-amlogic --depth=1 clone/amlogic
 git clone https://github.com/xiaorouji/openwrt-passwall --depth=1 clone/passwall
 
+git clone -b main https://github.com/very20101/openwrt_N1-Nova packages/opwrt_N1
+
 # Update packages
 rm -rf feeds/luci/applications/luci-app-passwall
 cp -fr clone/amlogic/luci-app-amlogic clone/passwall/luci-app-passwall feeds/luci/applications/
 
+## add extra-package
+mv cp -rf packages/opwrt_N1/extra-package/luci-app-ssr-plus feeds/luci/applications/luci-app-ssr-plus
+mv cp -rf packages/opwrt_N1/extra-package/luci-app-passwall2 feeds/luci/applications/luci-app-passwall2
+
 # Clean packages
 rm -rf clone
+
+rm -rf packages/opwrt_N1
+
+./scripts/feeds update -a
+./scripts/feeds install -f
+
