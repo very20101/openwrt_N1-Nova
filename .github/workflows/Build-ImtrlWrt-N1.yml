@@ -93,14 +93,16 @@ jobs:
         make -j$(nproc) || make -j1 || make -j1 V=s
         echo "compile_status=success" >> $GITHUB_ENV
 
-    - name: Upload firmware directory
-      uses: actions/upload-artifact@v4
-      if: steps.organize.outputs.status == 'success' && !cancelled()
+    - name: Upload OpenWrt to Release
+      uses: ncipollo/release-action@main
+      if: ${{ steps.clean.outputs.status }} == 'success' && !cancelled()
       with:
-        name: OpenWrt_firmware
-        path: |
-            ${{ env.FIRMWARE }}
-            ${{ env.PACKAGED_OUTPUTPATH }}
+          tag: ${{ steps.codes.outputs.build_tag }}
+          artifacts: openwrt/output/*
+          allowUpdates: true
+          removeArtifacts: false
+          replacesArtifacts: true
+          token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Package OpenWrt Firmware
       if: ${{ env.compile_status }} == 'success' && !cancelled()
