@@ -14,14 +14,14 @@ on:
 env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt
   REPO_BRANCH: v24.10.0
-  CONFIG_FILE: config/.config
+  CONFIG_FILE: config/.config20250312003
   DIY_SH: Armv8/diy.sh
-  FILES: N1/files
+  UPLOAD_FIRMWARE: true  
   TZ: Asia/Shanghai
 
 jobs:
   build:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
 
     steps:
     - name: Checkout
@@ -43,7 +43,9 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
       run: |
         sudo -E apt-get -qq update -y
-        sudo -E apt-get -qq install -y $(curl -fsSL https://raw.githubusercontent.com/nantayo/My-Pkg/master/2410)
+        sudo -E apt-get -y purge azure-cli ghc* zulu* llvm* firefox google* dotnet* powershell openjdk* mongodb* moby* || true
+        sudo -E apt-get -y install $(curl -fsSL https://tinyurl.com/ubuntu2204-make-openwrt)
+        sudo -E systemctl daemon-reload
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
@@ -91,31 +93,38 @@ jobs:
         make -j$(nproc) || make -j1 || make -j1 V=s
         echo "compile_status=success" >> $GITHUB_ENV
 
-    - name: Package armsr as openwrt
-      if: ${{ env.compile_status }} == 'success' && !cancelled()
-      uses: unifreq/openwrt_packit@master
-      env:
-        OPENWRT_ARMVIRT: openwrt/bin/targets/*/*/*.tar.gz
-        KERNEL_REPO_URL: breakingbadboy/OpenWrt
-        KERNEL_VERSION_NAME: 6.6.y
-        PACKAGE_SOC: diy
-        GZIP_IMGS: .xz
-        SCRIPT_DIY_PATH: N1/mk_s905d_n1.sh
-        WHOAMI: nantayo
-        SW_FLOWOFFLOAD: 0
-        SFE_FLOW: 0
-
-    - name: Upload firmware to release
-      uses: softprops/action-gh-release@master
-      if: ${{ env.PACKAGED_STATUS == 'success' }} && !cancelled()
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Upload firmware directory
+      uses: actions/upload-artifact@v4
+      if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
-        tag_name: OpenWrt_Stable_24.10.0
-        files: ${{ env.PACKAGED_OUTPUTPATH }}/*.img.xz
-        body: |
-          建议刷写U盘使用，待使用后认为版本稳定可靠，可以刷入EMMC
-          * 基本信息
-          IP: 192.168.1.200
-          账户: root
-          密码: password
+        name: OpenWrt_firmware
+        path: |
+            ${{ env.FIRMWARE }}
+            ${{ env.PACKAGED_OUTPUTPATH }}
+
+    - name: Package OpenWrt Firmware
+      if: ${{ env.compile_status }} == 'success' && !cancelled()
+      uses: ophub/flippy-openwrt-actions@main
+      env:
+       OPENWRT_ARMVIRT: openwrt/bin/targets/*/*/*.tar.gz
+       PACKAGE_SOC: all
+       KERNEL_VERSION_NAME: 6.1.y_6.6.y
+       WHOAMI: very20101
+       KERNEL_AUTO_LATEST: true
+
+    - name: Upload the packaged OpenWrt
+      uses: ncipollo/release-action@main
+      if: ${{ env.PACKAGED_STATUS }} == 'success' && !cancelled()
+      with:
+          tag: ${{ steps.codes.outputs.build_tag }}
+          artifacts: ${{ env.PACKAGED_OUTPUTPATH }}/*
+          allowUpdates: true
+          removeArtifacts: false
+          replacesArtifacts: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body: |
+            建议刷写U盘使用，待使用后认为版本稳定可靠，可以刷入EMMC
+            * 基本信息
+            IP: 192.168.1.200
+            账户: root
+            密码: password
