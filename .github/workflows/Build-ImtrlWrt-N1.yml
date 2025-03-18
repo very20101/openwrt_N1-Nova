@@ -18,6 +18,9 @@ env:
   DIY_SH: Armv8/diy.sh
   UPLOAD_FIRMWARE: true  
   TZ: Asia/Shanghai
+  FILE_NAME: OPENWRT-N1
+  PRODUCT_NAME: OPENWRT-N1
+  OPENWRT_TAG: OPENWRT-N1
 
 jobs:
   build:
@@ -93,16 +96,17 @@ jobs:
         make -j$(nproc) || make -j1 || make -j1 V=s
         echo "compile_status=success" >> $GITHUB_ENV
 
-    - name: Upload OpenWrt to Artifacts
+    - name: Upload OpenWrt Firmware to Release
       uses: ncipollo/release-action@main
-      if: ${{ steps.clean.outputs.status }} == 'success' && !cancelled()
+      if: ${{ steps.compile.outputs.status }} == 'success' && !cancelled()
       with:
-          tag: ROOTFS-N1-Nova
-          artifacts: openwrt/output/*
-          allowUpdates: true
-          removeArtifacts: false
-          replacesArtifacts: true
-          token: ${{ secrets.GITHUB_TOKEN }}
+        name: OPENWRT_N1
+        tag: ${{ env.OPENWRT_TAG }}
+        makeLatest: true
+        replacesArtifacts: true
+        artifacts: openwrt/bin/targets/*/*/*rootfs.tar.gz
+        allowUpdates: true
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Package OpenWrt Firmware
       if: ${{ env.compile_status }} == 'success' && !cancelled()
@@ -118,7 +122,8 @@ jobs:
       uses: ncipollo/release-action@main
       if: ${{ env.PACKAGED_STATUS }} == 'success' && !cancelled()
       with:
-          tag: Opwrt-N1-Nova
+          name: ARMV8-OPENWRT
+          tag: ${{ env.OPENWRT_TAG }} 
           artifacts: ${{ env.PACKAGED_OUTPUTPATH }}/*
           allowUpdates: true
           removeArtifacts: false
