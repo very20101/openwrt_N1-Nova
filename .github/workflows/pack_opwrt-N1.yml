@@ -2,8 +2,8 @@
 # Description: ARMv8 Package
 # File name: armv8-package.yml
 # Lisence: MIT
-# Author: HAIIBO
-# code url https://github.com/haiibo
+# Author: VERY20101
+# code manily from https://github.com/haiibo
 #===============================================
 
 name: pack_newK
