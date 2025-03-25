@@ -18,6 +18,7 @@ cp -rf packages/opwrt_N1/extra-package/luci-app-ssr-plus feeds/luci/applications
 cp -rf packages/opwrt_N1/extra-package/luci-app-passwall2 feeds/luci/applications/
 cp -rf packages/opwrt_N1/extra-package/shadow-tls feeds/packages/shadow-tls
 cp -rf packages/opwrt_N1/extra-package/shadowsocksr-libev feeds/packages/shadowsocksr-libev
+cp -rf packages/opwrt_N1/extra-package/luci-app-adguardhome feeds/packages/luci-app-adguardhome
 
 # Clean packages
 rm -rf clone
