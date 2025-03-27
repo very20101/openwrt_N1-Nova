@@ -60,6 +60,8 @@ jobs:
           sudo -E apt-get clean
           sudo sed -i '/NVM_DIR/d;/skel/d' /root/{.bashrc,.profile}
           sudo rm -rf ~/{.cargo,.dotnet,.rustup}
+          sudo mkdir -p /workdir
+          sudo chown $USER:$GROUPS /workdir
           sudo timedatectl set-timezone "${TZ}"
           echo "status=success" >> ${GITHUB_OUTPUT}
         
