@@ -24,22 +24,22 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
     - name: Checkout
       uses: actions/checkout@main
 
-  #  - name: Free up space
-  #    uses: jlumbroso/free-disk-space@main
-  #    with:
-  #      tool-cache: true
-  #      android: true
-  #     dotnet: true
-  #      haskell: true
-  #      large-packages: true
-   #     docker-images: true
-   #     swap-storage: true
+    - name: Free up space
+      uses: jlumbroso/free-disk-space@main
+      with:
+        tool-cache: true
+        android: true
+        dotnet: true
+        haskell: true
+        large-packages: true
+        docker-images: true
+        swap-storage: true
 
     - name: Initialization environment
       id: init
