@@ -41,6 +41,12 @@ jobs:
         docker-images: true
         swap-storage: true
 
+    - name: Clean up disk space
+      run: |
+        sudo rm -rf /home/runner/work
+        df -h
+
+
     - name: Initialize environment
       env:
         DEBIAN_FRONTEND: noninteractive
