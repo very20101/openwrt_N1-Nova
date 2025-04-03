@@ -6,7 +6,7 @@ sed -i 's/192.168.1.1/192.168.1.200/g' package/base-files/files/bin/config_gener
 # Add packages
 git clone https://github.com/ophub/luci-app-amlogic --depth=1 clone/amlogic
 git clone https://github.com/xiaorouji/openwrt-passwall --depth=1 clone/passwall
-
+git clone https://github.com/kenzok8/small-package package/smpackage
 git clone -b main https://github.com/very20101/openwrt_N1-Nova packages/opwrt_N1
 
 # Update packages
