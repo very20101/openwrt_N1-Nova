@@ -24,7 +24,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-22.04
 
     steps:
     - name: Checkout
@@ -49,7 +49,7 @@ jobs:
         sudo apt-get autoclean
         sudo rm -rf /var/lib/apt/lists/*
         sudo -E apt-get -qq update -y
-        sudo -E apt-get -qq install -y $(curl -fsSL https://raw.githubusercontent.com/nantayo/My-Pkg/master/2410)
+        sudo -E apt-get -y install $(curl -fsSL https://tinyurl.com/ubuntu2204-make-openwrt)
         sudo -E apt-get -qq autoremove --purge
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /workdir
@@ -71,7 +71,7 @@ jobs:
         ./scripts/feeds install -a
         $GITHUB_WORKSPACE/$DIY_SH
         ./scripts/feeds update -a
-        ./scripts/feeds install -a
+        ./scripts/feeds install -f
 
     - name: Load custom config
       run: |
