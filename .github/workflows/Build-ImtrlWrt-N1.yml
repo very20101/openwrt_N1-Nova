@@ -14,7 +14,7 @@ on:
 env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt
   REPO_BRANCH: v24.10.0
-  CONFIG_FILE: config/.config-opwrt-2025040201
+  CONFIG_FILE: config/.config-imm-2025040301
   DIY_SH: Armv8/diy.sh
   UPLOAD_FIRMWARE: true  
   TZ: Asia/Shanghai
