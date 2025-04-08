@@ -152,6 +152,10 @@ define Package/$(PKG_NAME)/conffiles
 /usr/share/passwall2/domains_excluded
 endef
 
+define Package/luci-app-passwall2/install
+	$(INSTALL_DIR) $(1)/www/luci-static/resources
+	$(INSTALL_BIN) ./files/qrcode.min.js $(1)/www/luci-static/resources/qrcode2.min.js
+endef
 
 include $(TOPDIR)/feeds/luci/luci.mk
 
