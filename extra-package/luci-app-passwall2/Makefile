@@ -150,16 +150,8 @@ define Package/$(PKG_NAME)/conffiles
 /etc/config/passwall2
 /etc/config/passwall2_server
 /usr/share/passwall2/domains_excluded
-/www/luci-static/resources/qrcode.min.js
 endef
 
-define Package/luci-app-passwall2/install
-	$(INSTALL_DIR) $(1)/www/luci-static/resources
-	# Check if qrcode.min.js already exists before copying
-	if [ ! -f $(1)/www/luci-static/resources/qrcode.min.js ]; then \
-		$(INSTALL_DATA) ./files/qrcode.min.js $(1)/www/luci-static/resources/; \
-	fi
-endef
 
 include $(TOPDIR)/feeds/luci/luci.mk
 
