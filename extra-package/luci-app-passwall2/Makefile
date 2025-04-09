@@ -146,17 +146,6 @@ endif
 endmenu
 endef
 
-define Package/luci-app-passwall2/install
-	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/controller
-	$(INSTALL_BIN) ./files/luasrc/controller/passwall2.lua $(1)/usr/lib/lua/luci/controller/passwall2.lua
-        $(INSTALL_DIR) $(1)/www/luci-static/resources
-	$(INSTALL_BIN) ./files/qrcode.min.js $(1)/www/luci-static/resources/qrcode2.min.js
-	# Other install commands...
-	
-	# Exclude qrcode.min.js to avoid conflict
-	# $(INSTALL_BIN) ./files/www/luci-static/resources/qrcode.min.js $(1)/www/luci-static/resources/qrcode.min.js
-endef
-
 define Package/$(PKG_NAME)/conffiles
 /etc/config/passwall2
 /etc/config/passwall2_server
