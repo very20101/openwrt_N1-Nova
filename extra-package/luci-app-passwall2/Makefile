@@ -150,7 +150,18 @@ define Package/$(PKG_NAME)/conffiles
 /etc/config/passwall2
 /etc/config/passwall2_server
 /usr/share/passwall2/domains_excluded
-/www/luci-static/resources/qrcode1.min.js
+/www/luci-static/resources/qrcode.min.js
+endef
+
+define Package/luci-app-passwall2/install
+    $(INSTALL_DIR) $(1)/usr/lib/lua/luci/controller
+    $(INSTALL_BIN) ./luasrc/controller/passwall2.lua $(1)/usr/lib/lua/luci/controller/passwall2.lua
+     if [ ! -f "$(1)/www/luci-static/resources/qrcode.min.js" ]; then
+	$(INSTALL_BIN) ./www/luci-static/resources/qrcode.min.js $(1)/www/luci-static/resources/qrcode.min.js
+fi
+	# Ensure this line does not conflict with luci-app-passwall
+	# $(INSTALL_BIN) ./www/luci-static/resources/qrcode.min.js $(1)/www/luci-static/resources/qrcode.min.js
+	# Instead, you could place it in a unique location or handle differently
 endef
 
 include $(TOPDIR)/feeds/luci/luci.mk
