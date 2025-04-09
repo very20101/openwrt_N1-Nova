@@ -17,10 +17,10 @@ cp -rf clone/amlogic/luci-app-amlogic clone/passwall/luci-app-passwall feeds/luc
 
 ## add extra-package
 cp -rf packages/opwrt_N1/extra-package/luci-app-ssr-plus feeds/luci/applications/
-cp -rf packages/opwrt_N1/extra-package/luci-app-passwall2 feeds/luci/applications/
+cp -rf packages/opwrt_N1/extra-package/luci-app-passwall2 packages/luci/applications/
 cp -rf packages/opwrt_N1/extra-package/shadow-tls feeds/packages/shadow-tls
-cp -rf packages/opwrt_N1/extra-package/shadowsocksr-libev feeds/packages/shadowsocksr-libev
-cp -rf packages/opwrt_N1/extra-package/shadowsocks-libev feeds/packages/shadowsocks-libev
+cp -rf packages/opwrt_N1/extra-package/shadowsocksr-libev packages/shadowsocksr-libev
+cp -rf packages/opwrt_N1/extra-package/shadowsocks-libev packages/shadowsocks-libev
 cp -rf packages/opwrt_N1/extra-package/luci-app-adguardhome feeds/packages/luci-app-adguardhome
 
 cp -rf packages/opwrt_N1/extra-package/rclone package/feeds/packages/rclone
