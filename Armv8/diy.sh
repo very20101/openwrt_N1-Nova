@@ -4,7 +4,7 @@
 sed -i 's/192.168.1.1/192.168.1.200/g' package/base-files/files/bin/config_generate
 
 # Add packages
-git clone https://github.com/kenzok8/small-package package/smpackage
+git clone https://github.com/very20101/small-package  smpackage
 git clone https://github.com/ophub/luci-app-amlogic --depth=1 clone/amlogic
 git clone https://github.com/xiaorouji/openwrt-passwall --depth=1 clone/passwall
 
