@@ -47,7 +47,8 @@ jobs:
         sudo apt-get install -y libncursesw6
         sudo -E systemctl daemon-reload
         sudo -E apt-get -y autoremove --purge
-        sudo -E apt-get -y clean & sudo -E apt-get -y autoclean
+        sudo -E apt-get -y clean 
+        sudo -E apt-get -y autoclean
         sudo timedatectl set-timezone "$TZ" 
 
     - name: Download Armsr(Armvirt) Firmware
