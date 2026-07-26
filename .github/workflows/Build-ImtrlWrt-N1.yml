@@ -25,7 +25,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
     - name: Checkout
@@ -53,7 +53,7 @@ jobs:
         sudo apt-get clean
         sudo apt-get autoclean
         sudo -E apt-get -qq update -y
-        sudo -E apt-get -y install $(curl -fsSL https://tinyurl.com/ubuntu2204-make-openwrt)
+        sudo -E apt-get -y install $(curl -fsSL https://tinyurl.com/ubuntu2404-make-openwrt)
         sudo -E apt-get -qq autoremove --purge
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /workdir
@@ -101,7 +101,7 @@ jobs:
         cd openwrt
         echo -e "$(nproc) thread compile"
         make clean
-        rm -rf feeds/packages/admin/netdata
+        #rm -rf feeds/packages/admin/netdata
         rm -rf package/smpackage/trojan-plus
         ulimit -c unlimited
         make -j$(nproc) || make -j1 || make -j1 V=s
