@@ -101,7 +101,9 @@ jobs:
         echo -e "$(nproc) thread compile"
         make clean
         #rm -rf feeds/packages/admin/netdata
-        rm -rf package/feeds/packages/smartdns
+        git clone https://github.com/very20101/openwrt_N1-Nova openwrt_N1-Nova
+        rm -rf feeds/packages/net/smartdns cp openwrt_N1-Nova/extra-package/smartdns feeds/packages/net/smartdns
+        rm -rf openwrt_N1-Nova
         rm -rf package/smpackage/trojan-plus
         ulimit -c unlimited
         make -j$(nproc) || make -j1 || make -j1 V=s
