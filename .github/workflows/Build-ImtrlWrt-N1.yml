@@ -53,7 +53,8 @@ jobs:
         sudo apt-get clean
         sudo apt-get autoclean
         sudo -E apt-get -qq update -y
-        sudo -E apt -yqq install rename $(curl -fsSL is.gd/depends_ubuntu_2404)
+        #sudo -E apt -yqq install rename $(curl -fsSL is.gd/depends_ubuntu_2404)
+        sudo -E apt-get -y install $(curl -fsSL https://tinyurl.com/ubuntu2204-make-openwrt)
         sudo -E apt-get -qq autoremove --purge
         sudo timedatectl set-timezone "$TZ"
         sudo mkdir -p /workdir
