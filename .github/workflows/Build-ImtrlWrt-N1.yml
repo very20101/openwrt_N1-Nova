@@ -101,6 +101,7 @@ jobs:
         echo -e "$(nproc) thread compile"
         make clean
         #rm -rf feeds/packages/admin/netdata
+        rm -rf package/feeds/packages/smartdns
         rm -rf package/smpackage/trojan-plus
         ulimit -c unlimited
         make -j$(nproc) || make -j1 || make -j1 V=s
