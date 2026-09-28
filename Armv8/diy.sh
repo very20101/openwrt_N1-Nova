@@ -7,6 +7,14 @@ sed -i 's/192.168.1.1/192.168.1.200/g' package/base-files/files/bin/config_gener
 git clone https://github.com/very20101/small-package  smpackage
 git clone https://github.com/ophub/luci-app-amlogic --depth=1 clone/amlogic
 git clone https://github.com/xiaorouji/openwrt-passwall --depth=1 clone/passwall
+git clone https://github.com/QiuSimons/luci-app-daed clone/daed
+git clone https://github.com/Zerogiven-OpenWRT-Packages/luci-app-podman --depth=1 feeds/luci/applications/luci-app-podman
+
+# Adjust packages
+rm -rf feeds/luci/applications/luci-app-daed feeds/luci/applications/luci-app-passwall
+cp -rf clone/amlogic/luci-app-amlogic clone/daed/luci-app-daed clone/passwall/luci-app-passwall feeds/luci/applications/
+sed -i '/luci-app-attendedsysupgrade/d' feeds/luci/collections/luci/Makefile
+sed -i 's/GO_ARM64:=v8\.0$/GO_ARM64:=v8.0,crypto/' feeds/packages/lang/golang/golang-values.mk
 
 git clone -b main https://github.com/very20101/openwrt_N1-Nova packages/opwrt_N1
 
